@@ -1,6 +1,7 @@
 package cc.broniaTruth.utils;
 
 import cc.broniaTruth.Alicia;
+import cc.broniaTruth.config.Config;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.Connection;
@@ -10,9 +11,9 @@ import java.sql.SQLException;
 public class Database {
     private static Connection conn;
 
-    private static final String url = "jdbc:mysql://127.0.0.1:3306/db?useSSL=false";
-    private static final String user = "root";
-    private static final String password = "Sen060908.=";
+    private static final String url = Config.getProperties().getProperty("database_url");
+    private static final String user = Config.getProperties().getProperty("database_user");
+    private static final String password = Config.getProperties().getProperty("database_password");
 
     public static void connect() {
         try {

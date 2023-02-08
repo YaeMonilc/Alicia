@@ -5,6 +5,8 @@
 
 This is an Alicia forum's server.
 
+The config file is __/Resource/config.properties__
+
 Database Table code (MYSQL) :
 ````mysql
 CREATE TABLE user_info (
