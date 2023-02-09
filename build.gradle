@@ -5,7 +5,7 @@ plugins {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'cc.broniatruth.Alicia'
+        attributes 'Main-Class': 'cc.broniaTruth.Alicia'
     }
 }
 
