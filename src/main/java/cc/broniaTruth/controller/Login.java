@@ -1,5 +1,6 @@
 package cc.broniaTruth.controller;
 
+import cc.broniaTruth.config.Config;
 import cc.broniaTruth.entity.ResultValue;
 import cc.broniaTruth.entity.Token;
 import cc.broniaTruth.entity.User;
@@ -51,7 +52,7 @@ public class Login implements HttpService {
 
         Calendar expire = Calendar.getInstance();
         expire.setTime(new Date());
-        expire.add(Calendar.DAY_OF_WEEK, 7);
+        expire.add(Calendar.DAY_OF_WEEK, Integer.parseInt(Config.getProperties().getProperty("token_expire_day")));
 
         Token token = new Token(
                 StringUtils.random(20, true),
