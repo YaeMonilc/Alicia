@@ -44,11 +44,12 @@ CREATE TABLE comment (
 );
 
 CREATE TABLE token (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	value VARCHAR(255) NOT NULL UNIQUE,
-	create_time DATETIME NOT NULL,
-	expire_time DATETIME NOT NULL,
-	user_id INT NOT NULL,
-	CONSTRAINT fk_token_user_id FOREIGN KEY(user_id) REFERENCES user(id)
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    ip VARCHAR(255) NOT NULL,
+    create_time DATETIME NOT NULL,
+    expire_time DATETIME NOT NULL,
+    user_id INT NOT NULL,
+    CONSTRAINT fk_token_user_id FOREIGN KEY(user_id) REFERENCES user(id)
 );
 ````

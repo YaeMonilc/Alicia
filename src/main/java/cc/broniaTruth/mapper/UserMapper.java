@@ -53,6 +53,29 @@ public class UserMapper {
         }
         return null;
     }
+    public static ResultSet getUsersByAccountAndPassword(String account, String password){
+        try {
+            PreparedStatement preparedStatement = DatabaseManager.getConnection()
+                    .prepareStatement("SELECT * FROM user WHERE account = ? AND password = ?");
+            preparedStatement.setString(1, account);
+            preparedStatement.setString(2, password);
+            return preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            Alicia.getLogger().error(e.toString());
+        }
+        return null;
+    }
+    public static ResultSet getUsersAndInfoByAccount(String account){
+        try {
+            PreparedStatement preparedStatement = DatabaseManager.getConnection()
+                    .prepareStatement("SELECT * FROM (SELECT * FROM user WHERE account = ?) user LEFT OUTER JOIN user_info ON user_info.id = user.info_id");
+            preparedStatement.setString(1, account);
+            return preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            Alicia.getLogger().error(e.toString());
+        }
+        return null;
+    }
 
     public static int addUsers(User... users){
         try {

@@ -2,9 +2,11 @@ package cc.broniaTruth.manager;
 
 import cc.broniaTruth.Alicia;
 import cc.broniaTruth.config.Config;
+import cc.broniaTruth.entity.ResultValue;
 import cc.broniaTruth.service.http.Http;
 import cc.broniaTruth.service.http.HttpService;
 import io.javalin.Javalin;
+import io.javalin.http.HttpStatus;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,9 +21,13 @@ public class HttpServicesManager {
         getAllHttpService();
         getJavalin().start(Config.getProperties().getProperty("http_ip"),
                 Integer.parseInt(Config.getProperties().getProperty("http_port")));
+        errorHandle();
     }
 
-    public static void runAllServices(){
+    public static void runServices(){
+        getJavalin().before(ctx -> {
+            ctx.header("Access-Control-Allow-Origin", "*");
+        });
         httpServiceList.forEach((http, httpService) -> {
             switch (http.mode()) {
                 case "GET" -> getJavalin().get(http.path(), httpService::handle);
@@ -30,6 +36,18 @@ public class HttpServicesManager {
                 case "PATCH" -> getJavalin().patch(http.path(), httpService::handle);
                 case "DELETE" -> getJavalin().delete(http.path(), httpService::handle);
             }
+        });
+    }
+
+    private static void errorHandle(){
+        getJavalin().error(HttpStatus.NOT_FOUND, ctx -> {
+            ctx.result(new ResultValue(ResultValue.Codes.NOT_FOUND).toString());
+        });
+        getJavalin().error(HttpStatus.INTERNAL_SERVER_ERROR, ctx -> {
+            ctx.result(new ResultValue(ResultValue.Codes.INTERNAL_SERVER_ERROR).toString());
+        });
+        getJavalin().error(HttpStatus.PRECONDITION_FAILED, ctx -> {
+            ctx.result(new ResultValue(ResultValue.Codes.PRECONDITION_FAILED).toString());
         });
     }
 

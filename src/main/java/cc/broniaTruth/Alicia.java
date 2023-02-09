@@ -12,7 +12,7 @@ public class Alicia {
 
     public static void main(String[] args) {
         Database.connect();
-        HttpServicesManager.runAllServices();
+        HttpServicesManager.runServices();
     }
 
     public static Logger getLogger() {
