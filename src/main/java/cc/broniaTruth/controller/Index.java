@@ -9,7 +9,6 @@ import cc.broniaTruth.service.http.HttpService;
 import cc.broniaTruth.mapper.UserMapper;
 import io.javalin.http.Context;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
